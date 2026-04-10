@@ -29,8 +29,8 @@ const defaultItems = [
   { id: 'settings', icon: 'SettingsIcon' as const, label: 'Settings', section: 'Support' },
 ];
 
-export const FlowSidePanel: React.FC<SidePanelProps> = ({
-  activeItem = 'reports',
+export const FlowSidePanel: React.FC<SidePanelProps> = ({ 
+  activeItem = 'reports', 
   onItemClick,
   brandingSlot,
   footerSlot,
