@@ -40,7 +40,7 @@ const columns = [
   columnHelper.accessor('phone', {
     header: 'Phone Number',
     cell: (info) => (
-      <div className="flex items-center gap-2 text-[#00BFA5]">
+      <div className="flex items-center gap-2 text-[#00BFA5] whitespace-nowrap">
         <Phone size={14} />
         <span className="text-[13px] font-medium">{info.getValue()}</span>
       </div>
@@ -59,7 +59,7 @@ const columns = [
     cell: (info) => {
       const val = info.getValue()
       return (
-        <div className="flex flex-col gap-1">
+        <div className="flex items-center gap-2 whitespace-nowrap">
           <div className={cn(
             "flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium w-fit",
             val.type === 'Listing' ? "bg-purple-100 text-purple-700" : "bg-green-100 text-green-700"
@@ -67,7 +67,7 @@ const columns = [
             <div className={cn("w-1.5 h-1.5 rounded-full", val.type === 'Listing' ? "bg-purple-500" : "bg-green-500")} />
             {val.type}: {val.title}
           </div>
-          <span className="text-[11px] text-[#9CA3AF] ml-1">+{val.count} others</span>
+          <span className="text-[11px] text-[#9CA3AF]">+{val.count} others</span>
         </div>
       )
     },
@@ -145,7 +145,7 @@ export function ClientTable({ data }: { data: Client[] }) {
                 <input type="checkbox" className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
               </th>
               {headerGroup.headers.map(header => (
-                <th key={header.id} className="px-4 py-3 text-left text-[11px] font-semibold text-[#6B7280] uppercase tracking-wider bg-[#F9FAFB]">
+                <th key={header.id} className="px-4 py-3 text-left text-[11px] font-semibold text-[#6B7280] uppercase tracking-wider bg-[#F9FAFB] whitespace-nowrap">
                   {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                 </th>
               ))}
@@ -168,7 +168,7 @@ export function ClientTable({ data }: { data: Client[] }) {
                   <input type="checkbox" className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                 </td>
                 {row.getVisibleCells().map(cell => (
-                  <td key={cell.id} className="px-4 py-3 align-middle">
+                  <td key={cell.id} className="px-4 py-3 align-middle whitespace-nowrap">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
