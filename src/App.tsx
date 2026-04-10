@@ -29,11 +29,36 @@ export function App() {
         <main className="flex-1 flex flex-col bg-white mt-[70px] overflow-hidden">
           {/* Fixed Header Section (Greeting + Tabs) */}
           <div className="shrink-0 bg-white/80 backdrop-blur-sm z-30">
-            <div className="px-8 pt-8 pb-4">
-              <h1 className="text-[24px] font-bold text-[#111827] tracking-tight">
-                Hello, MohammedTeamLead123 Sayyaf12!
-              </h1>
-            </div>
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+              className="px-8 pt-8 pb-4 flex items-center gap-4"
+            >
+              <div className="p-3 rounded-2xl bg-gradient-to-tr from-indigo-500/10 to-purple-500/10 border border-indigo-500/10 shadow-[0_8px_16px_-4px_rgba(79,70,229,0.1)] flex items-center justify-center">
+                <motion.span 
+                  animate={{ rotate: [0, 14, -8, 14, 0] }}
+                  transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1 }}
+                  className="text-2xl inline-block origin-bottom-right cursor-default"
+                >
+                  👋
+                </motion.span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <h1 className="text-[26px] font-bold text-[#111827] tracking-tight leading-none">
+                  Hello, <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 animate-gradient-slow">MohammedTeamLead123 Sayyaf12!</span>
+                </h1>
+                <div className="flex items-center gap-2">
+                  <p className="text-[13px] text-[#6B7280] font-medium">
+                    Welcome back to your vendor reporting suite
+                  </p>
+                  <span className="w-1 h-1 rounded-full bg-[#E5E7EB]" />
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-50 text-indigo-600 border border-indigo-100/50">
+                    Team Lead
+                  </span>
+                </div>
+              </div>
+            </motion.div>
 
             <div className="px-8">
               <nav className="flex items-center border-b border-[#E5E7EB] gap-0">
