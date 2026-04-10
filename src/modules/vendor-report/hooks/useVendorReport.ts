@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useVendorFlow } from '../context/VendorFlowProvider'
-import type { VendorTransaction } from '../core/types'
+import type { VendorTransaction } from '../core/schema'
 
 export function useVendorReport() {
   const { data, isLoading } = useVendorFlow()

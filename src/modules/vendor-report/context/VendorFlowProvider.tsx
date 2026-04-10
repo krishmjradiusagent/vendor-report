@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { VendorTransaction } from '../core/types'
+import type { VendorTransaction } from '../core/schema'
 import { MOCK_TRANSACTIONS } from '../core/mockData'
 
 type DataSource = 'mock' | 'api'
@@ -8,6 +8,8 @@ interface VendorFlowContextType {
   data: VendorTransaction[]
   isLoading: boolean
   source: DataSource
+  activeTab: string
+  setActiveTab: (tab: string) => void
   config: {
     primaryColor: string
     showSidePanel: boolean
@@ -51,17 +53,21 @@ export function VendorFlowProvider({
     loadData()
   }, [source])
 
+  const [activeTab, setActiveTab] = React.useState('vendor-report')
+
   const value = React.useMemo(() => ({
     data,
     isLoading,
     source,
+    activeTab,
+    setActiveTab,
     config: {
       primaryColor: '#4F46E5',
       showSidePanel: true,
       showTopNav: true,
       ...config
     }
-  }), [data, isLoading, source, config])
+  }), [data, isLoading, source, config, activeTab])
 
   return (
     <VendorFlowContext.Provider value={value}>

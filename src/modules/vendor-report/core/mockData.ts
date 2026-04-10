@@ -1,4 +1,4 @@
-import type { VendorTransaction } from './types'
+import type { VendorTransaction } from './schema'
 
 export const MOCK_TRANSACTIONS: VendorTransaction[] = [
   {

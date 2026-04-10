@@ -11,7 +11,7 @@ import {
 } from '@tanstack/react-table'
 import { ArrowUp, ArrowDown, ChevronLeft, ChevronRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import type { VendorTransaction } from '../../core/types'
+import type { VendorTransaction } from '../../core/schema'
 import { cn } from '../../core/utils'
 
 const PAGE_SIZE = 25
