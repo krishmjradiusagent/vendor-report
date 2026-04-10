@@ -1,6 +1,14 @@
 import * as React from 'react'
 import { ChevronDown, Search, Download } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { motion } from 'framer-motion'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 interface CommandBarProps {
   search: string
@@ -11,6 +19,11 @@ interface CommandBarProps {
   onYearChange: (v: string) => void
   collaboratorType: string
   onCollaboratorTypeChange: (v: string) => void
+  vendor: string
+  onVendorChange: (v: string) => void
+  vendorOptions: string[]
+  representing: string
+  onRepresentingChange: (v: string) => void
   totalCount: number
 }
 
@@ -25,36 +38,40 @@ const COLLABORATOR_TYPES = [
   'All Types', 'Escrow', 'Title', 'Lender', 'TC', 'Home Warranty',
 ]
 
-// Figma: filter dropdowns match "View Clients For" / "Type" / "Status" pill buttons
-// border #E5E7EB, bg white, text 12px/500 #374151, height 36px, radius 8px
+const REPRESENTING_TYPES = [
+  'All Representing', 'Buyer', 'Seller', 'Tenant', 'Landlord', 'Referral',
+]
+
+
 function FilterSelect({
   value,
   onChange,
   options,
   className,
+  disabled,
 }: {
   value: string
   onChange: (v: string) => void
   options: string[]
   className?: string
+  disabled?: boolean
 }) {
   return (
-    <div className={cn('relative flex items-center', className)}>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="appearance-none h-[36px] pl-3 pr-8 text-[12px] font-medium text-[#374151] bg-white border border-[#E5E7EB] rounded-[8px] focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 cursor-pointer hover:border-[#D1D5DB] transition-colors"
-      >
+    <Select value={value} onValueChange={onChange} disabled={disabled}>
+      <SelectTrigger className={cn("w-auto min-w-[120px]", className)}>
+        <SelectValue placeholder="Select option" />
+      </SelectTrigger>
+      <SelectContent>
         {options.map((o) => (
-          <option key={o} value={o}>{o}</option>
+          <SelectItem key={o} value={o}>
+            {o}
+          </SelectItem>
         ))}
-      </select>
-      <ChevronDown className="pointer-events-none absolute right-2.5 h-3.5 w-3.5 text-[#9CA3AF]" />
-    </div>
+      </SelectContent>
+    </Select>
   )
 }
 
-import { motion } from 'framer-motion'
 
 export function CommandBar({
   search,
@@ -65,6 +82,11 @@ export function CommandBar({
   onYearChange,
   collaboratorType,
   onCollaboratorTypeChange,
+  vendor,
+  onVendorChange,
+  vendorOptions,
+  representing,
+  onRepresentingChange,
   totalCount,
 }: CommandBarProps) {
   return (
@@ -85,7 +107,22 @@ export function CommandBar({
 
         <FilterSelect value={month} onChange={onMonthChange} options={MONTHS} />
         <FilterSelect value={year} onChange={onYearChange} options={YEARS} />
-        <FilterSelect value={collaboratorType} onChange={onCollaboratorTypeChange} options={COLLABORATOR_TYPES} />
+        <FilterSelect value={representing} onChange={onRepresentingChange} options={REPRESENTING_TYPES} />
+        <FilterSelect 
+          value={collaboratorType} 
+          onChange={(v) => {
+            onCollaboratorTypeChange(v)
+            onVendorChange('All Vendors')
+          }} 
+          options={COLLABORATOR_TYPES} 
+        />
+        <FilterSelect 
+          value={vendor} 
+          onChange={onVendorChange} 
+          options={vendorOptions} 
+          disabled={collaboratorType === 'All Types'}
+          className="min-w-[140px]"
+        />
       </div>
 
       {/* Right: search + export — Figma: search rounded pill, 36px height */}
@@ -97,14 +134,14 @@ export function CommandBar({
             placeholder="Search by address or vendor..."
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="h-[36px] w-[260px] pl-9 pr-3 text-[12px] font-medium border border-[#E5E7EB] rounded-[8px] bg-white placeholder-[#9CA3AF] text-[#374151] focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-colors"
+            className="h-[36px] w-[260px] pl-10 pr-4 text-[12px] font-medium border border-[#E5E7EB] rounded-full bg-white placeholder-[#9CA3AF] text-[#374151] focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-colors"
           />
         </div>
         {/* Export button — Figma: ghost button, border, 36px */}
         <motion.button
           whileHover={{ backgroundColor: '#F9FAFB', borderColor: '#D1D5DB' }}
           whileTap={{ scale: 0.98 }}
-          className="flex items-center gap-1.5 h-[36px] px-3 text-[12px] font-medium text-[#374151] bg-white border border-[#E5E7EB] rounded-[8px] transition-colors"
+          className="flex items-center gap-1.5 h-[36px] px-5 text-[12px] font-medium text-[#374151] bg-white border border-[#E5E7EB] rounded-full transition-colors"
         >
           <Download className="h-3.5 w-3.5 text-[#6B7280]" />
           Export

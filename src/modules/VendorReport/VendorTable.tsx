@@ -75,16 +75,20 @@ const columns: ColumnDef<VendorTransaction>[] = [
     size: 110,
     cell: ({ getValue }) => {
       const val = getValue() as string
-      const isBuyer = val === 'Buyer'
-      const isBoth = val === 'Both'
+      const styles: Record<string, string> = {
+        Buyer: 'bg-[#EFF8FE] text-[#0C4A6E] border-[#EFF8FE]',
+        Seller: 'bg-[#CCFBF1]/50 text-[#134E4A] border-teal-100/50',
+        Tenant: 'bg-[#EDE9FE]/50 text-[#4C1D95] border-violet-100/50',
+        Landlord: 'bg-[#D1FAE5]/50 text-[#365314] border-emerald-100/50',
+        Referral: 'bg-[#FFE4E6] text-[#881337] border-[#FFE4E6]',
+      }
+      const style = styles[val] || 'bg-gray-50 text-gray-700 border-gray-100'
       return (
         <span className={cn(
-          'text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tight',
-          isBuyer ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 
-          isBoth ? 'bg-indigo-50 text-indigo-700 border border-indigo-100' : 
-          'bg-rose-50 text-rose-700 border border-rose-100'
+          'text-[10px] font-semibold px-2 py-0.5 rounded-[13px] tracking-tight border capitalize',
+          style
         )}>
-          {val}
+          {val.toLowerCase() === 'landlords' ? 'Landlord' : val}
         </span>
       )
     },
@@ -92,10 +96,10 @@ const columns: ColumnDef<VendorTransaction>[] = [
   {
     accessorKey: 'address',
     header: 'Address',
-    size: 210,
+    size: 280,
     // Property address color updated to #5A5FF2
     cell: ({ getValue }) => (
-      <span className="text-[12px] font-semibold text-[#5A5FF2] block truncate max-w-[200px] cursor-pointer hover:underline underline-offset-2 decoration-[#5A5FF2]/50 transition-colors">
+      <span className="text-[12px] font-semibold text-[#5A5FF2] block cursor-pointer hover:underline underline-offset-2 decoration-[#5A5FF2]/50 transition-colors">
         {getValue() as string}
       </span>
     ),
@@ -221,10 +225,10 @@ export function VendorTable({ data, globalFilter }: VendorTableProps) {
   const totalFiltered = table.getFilteredRowModel().rows.length
 
   return (
-    <div className="flex flex-col gap-0">
-      <div className="w-full overflow-x-auto rounded-[16px] border border-[#E5E7EB] bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm">
+    <div className="flex flex-col gap-0 h-full overflow-hidden">
+      <div className="w-full flex-1 overflow-auto rounded-[16px] border border-[#E5E7EB] bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm custom-scrollbar">
         <table className="w-full border-collapse">
-          <thead className="sticky top-0 z-10 bg-[#F9FAFB]/90 backdrop-blur-md">
+          <thead className="sticky top-0 z-20 bg-[#F9FAFB]/95 backdrop-blur-md">
             {table.getHeaderGroups().map((hg) => (
               <tr key={hg.id} className="border-b border-[#E5E7EB]">
                 {hg.headers.map((header) => {
@@ -299,7 +303,7 @@ export function VendorTable({ data, globalFilter }: VendorTableProps) {
             </AnimatePresence>
           </tbody>
 
-          <tfoot>
+          <tfoot className="sticky bottom-0 z-10 bg-[#F9FAFB]/95 backdrop-blur-md">
             <tr className="bg-[#F9FAFB]/50 border-t border-[#E5E7EB]">
               <td colSpan={columns.length} className="px-5 py-3 text-[12px] font-semibold text-[#6B7280]">
                 Overall total: <span className="text-indigo-600">{totalFiltered}</span> results identified
@@ -324,7 +328,7 @@ export function VendorTable({ data, globalFilter }: VendorTableProps) {
               whileTap={{ scale: 0.95 }}
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              className="flex items-center gap-1.5 h-[34px] px-3 text-[12px] font-semibold text-[#374151] border border-[#E5E7EB] rounded-[10px] bg-white disabled:opacity-30 hover:bg-[#F9FAFB] transition-all shadow-sm"
+              className="flex items-center gap-1.5 h-[34px] px-4 text-[12px] font-semibold text-[#374151] border border-[#E5E7EB] rounded-full bg-white disabled:opacity-30 hover:bg-[#F9FAFB] transition-all shadow-sm"
             >
               <ChevronLeft className="h-4 w-4" /> Previous
             </motion.button>
@@ -333,12 +337,12 @@ export function VendorTable({ data, globalFilter }: VendorTableProps) {
                 <button
                   key={i}
                   onClick={() => table.setPageIndex(i)}
-                  className={cn(
-                    'h-[34px] w-[34px] text-[12px] font-bold rounded-[10px] transition-all',
-                    pageIndex === i
-                      ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200'
-                      : 'text-[#6B7280] hover:bg-[#F3F4F6]'
-                  )}
+                    className={cn(
+                      'h-[34px] w-[34px] text-[12px] font-bold rounded-full transition-all',
+                      pageIndex === i
+                        ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200'
+                        : 'text-[#6B7280] hover:bg-[#F3F4F6]'
+                    )}
                 >
                   {i + 1}
                 </button>
@@ -348,7 +352,7 @@ export function VendorTable({ data, globalFilter }: VendorTableProps) {
               whileTap={{ scale: 0.95 }}
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              className="flex items-center gap-1.5 h-[34px] px-3 text-[12px] font-semibold text-[#374151] border border-[#E5E7EB] rounded-[10px] bg-white disabled:opacity-30 hover:bg-[#F9FAFB] transition-all shadow-sm"
+              className="flex items-center gap-1.5 h-[34px] px-4 text-[12px] font-semibold text-[#374151] border border-[#E5E7EB] rounded-full bg-white disabled:opacity-30 hover:bg-[#F9FAFB] transition-all shadow-sm"
             >
               Next <ChevronRight className="h-4 w-4" />
             </motion.button>

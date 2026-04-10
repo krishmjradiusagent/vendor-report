@@ -18,7 +18,7 @@ export const MOCK_TRANSACTIONS: VendorTransaction[] = [
   {
     id: '2',
     transactionType: 'Lease Listing',
-    representing: 'Both',
+    representing: 'Tenant',
     address: '10111 Long Beach Blvd, Lynwood, CA',
     owner: 'Javier Alvarez',
     ownerAvatar: 'https://i.pravatar.cc/150?u=javier',
@@ -113,7 +113,7 @@ export const MOCK_TRANSACTIONS: VendorTransaction[] = [
   {
     id: '9',
     transactionType: 'Purchase',
-    representing: 'Both',
+    representing: 'Tenant',
     address: '18403 Devlin Ave, Artesia, CA',
     owner: 'Isayas Theodros',
     lender: 'Other',
@@ -194,7 +194,7 @@ export const MOCK_TRANSACTIONS: VendorTransaction[] = [
   {
     id: '15',
     transactionType: 'Purchase',
-    representing: 'Buyer',
+    representing: 'Referral',
     address: '226 W Maitan Ave, Monterey Park, CA',
     owner: 'Adam Loria',
     lender: 'Other',
@@ -207,7 +207,7 @@ export const MOCK_TRANSACTIONS: VendorTransaction[] = [
   {
     id: '16',
     transactionType: 'Listing',
-    representing: 'Seller',
+    representing: 'Landlord',
     address: '1461 Goldeneast St, Diamond Bar, CA',
     owner: 'Visakha Sir',
     ownerAvatar: 'https://i.pravatar.cc/150?u=visakha',
@@ -221,7 +221,7 @@ export const MOCK_TRANSACTIONS: VendorTransaction[] = [
   {
     id: '17',
     transactionType: 'Referral',
-    representing: 'Seller',
+    representing: 'Referral',
     address: '4262 Mesa Vista Dr, Hacienda Heights, CA',
     owner: 'Xavier Zaragoza',
     lender: 'N/A - Listing',
@@ -234,7 +234,7 @@ export const MOCK_TRANSACTIONS: VendorTransaction[] = [
   {
     id: '18',
     transactionType: 'Purchase',
-    representing: 'Buyer',
+    representing: 'Referral',
     address: '645 Chestnut Ave, Long Beach, CA',
     owner: 'Xavier Zaragoza',
     ownerAvatar: 'https://i.pravatar.cc/150?u=xavier',
@@ -248,7 +248,7 @@ export const MOCK_TRANSACTIONS: VendorTransaction[] = [
   {
     id: '19',
     transactionType: 'Lease Listing',
-    representing: 'Seller',
+    representing: 'Landlord',
     address: '1031 N Lilac Ave, Rialto, CA',
     owner: 'Adam Loria',
     lender: 'Other',
@@ -261,7 +261,7 @@ export const MOCK_TRANSACTIONS: VendorTransaction[] = [
   {
     id: '20',
     transactionType: 'Referral',
-    representing: 'Both',
+    representing: 'Referral',
     address: '29217 Walker Ave, Murrieta, CA',
     owner: 'Adam Loria',
     lender: 'Other',
