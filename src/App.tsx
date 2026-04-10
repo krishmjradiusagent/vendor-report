@@ -45,15 +45,11 @@ export function App() {
                 </motion.span>
               </div>
               <div className="flex flex-col gap-1">
-                <h1 className="text-[26px] font-bold text-[#111827] tracking-tight leading-none">
-                  Hello, <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 animate-gradient-slow">MohammedTeamLead123 Sayyaf12!</span>
-                </h1>
-                <div className="flex items-center gap-2">
-                  <p className="text-[13px] text-[#6B7280] font-medium">
-                    Welcome back to your vendor reporting suite
-                  </p>
-                  <span className="w-1 h-1 rounded-full bg-[#E5E7EB]" />
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-50 text-indigo-600 border border-indigo-100/50">
+                <div className="flex items-center gap-3">
+                  <h1 className="text-[26px] font-bold text-[#111827] tracking-tight leading-none">
+                    Hello, <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 animate-gradient-slow">Sarah Jenkins!</span>
+                  </h1>
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-bold bg-indigo-50 text-indigo-600 border border-indigo-100/50 uppercase tracking-wider">
                     Team Lead
                   </span>
                 </div>
