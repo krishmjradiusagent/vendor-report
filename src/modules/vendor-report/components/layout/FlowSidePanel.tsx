@@ -23,7 +23,6 @@ const defaultItems = [
   { id: 'benefits', icon: 'BenefitsIcon' as const, label: 'Benefits', section: 'Tools' },
   { id: 'newsfeed', icon: 'NewsfeedIcon' as const, label: 'Newsfeed', section: 'Manage' },
   { id: 'inventory', icon: 'InventoryIcon' as const, label: 'Inventory', section: 'Manage' },
-  { id: 'contacts', icon: 'ContactsIcon' as const, label: 'Contacts', section: 'Manage' },
   { id: 'marketing', icon: 'MarketingIcon' as const, label: 'Marketing', section: 'Manage' },
   { id: 'notifications', icon: 'NotificationsIcon' as const, label: 'Notifications', section: 'Support' },
   { id: 'support', icon: 'SupportIcon' as const, label: 'Support', section: 'Support' },
