@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { ChevronDown, Search, Download } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { Search, Download } from 'lucide-react'
+import { cn } from '../../core/utils'
 import { motion } from 'framer-motion'
 import {
   Select,
@@ -8,7 +8,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "../ui/select"
 
 interface CommandBarProps {
   search: string
@@ -31,17 +31,9 @@ const MONTHS = [
   'All Months', 'January', 'February', 'March', 'April',
   'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',
 ]
-
 const YEARS = ['2026', '2025', '2024', '2023']
-
-const COLLABORATOR_TYPES = [
-  'All Types', 'Escrow', 'Title', 'Lender', 'TC', 'Home Warranty',
-]
-
-const REPRESENTING_TYPES = [
-  'All Representing', 'Buyer', 'Seller', 'Tenant', 'Landlord', 'Referral',
-]
-
+const COLLABORATOR_TYPES = ['All Types', 'Escrow', 'Title', 'Lender', 'TC', 'Home Warranty']
+const REPRESENTING_TYPES = ['All Representing', 'Buyer', 'Seller', 'Tenant', 'Landlord', 'Referral']
 
 function FilterSelect({
   value,
@@ -75,7 +67,6 @@ function FilterSelect({
   )
 }
 
-
 export function CommandBar({
   search,
   onSearchChange,
@@ -93,11 +84,8 @@ export function CommandBar({
   totalCount,
 }: CommandBarProps) {
   return (
-    // Figma: Filters layer — glassmorphism + tight vertical rhythm
     <div className="flex items-center justify-between gap-4 py-3 bg-white border-b border-[#E5E7EB]">
-      {/* Left: count + filter label + dropdowns */}
       <div className="flex items-center gap-3 flex-wrap">
-        {/* Transaction count header — high-fidelity typography */}
         <div className="flex items-center gap-2.5">
           <div className="flex items-center justify-center min-w-[32px] h-[32px] bg-indigo-50 rounded-lg">
             <span className="text-[18px] font-bold text-indigo-600 leading-none">{totalCount}</span>
@@ -108,8 +96,6 @@ export function CommandBar({
         </div>
 
         <div className="w-px h-6 bg-[#E5E7EB] mx-1" />
-
-        {/* Filter label — Figma: muted semantic text */}
         <span className="text-[11px] font-bold text-[#9CA3AF] uppercase tracking-wider">filter by:</span>
 
         <div className="flex items-center gap-2">
@@ -134,12 +120,13 @@ export function CommandBar({
         </div>
       </div>
 
-      {/* Right: search + export — frictionless interactions */}
       <div className="flex items-center gap-3 shrink-0">
         <div className="relative group">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9CA3AF] group-focus-within:text-indigo-500 transition-colors" />
           <input
             type="text"
+            id="vendor-search"
+            name="search"
             placeholder="Search by address or vendor..."
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
