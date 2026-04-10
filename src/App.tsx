@@ -19,7 +19,7 @@ const TABS = [
 
 export function App() {
   const [activeTab, setActiveTab] = React.useState('vendor-report')
-  const [activeSideItem, setActiveSideItem] = React.useState('contacts')
+  const [activeSideItem, setActiveSideItem] = React.useState('dashboard')
 
   return (
     <VendorFlowProvider source="mock">
@@ -35,7 +35,7 @@ export function App() {
           <FlowTopNav />
 
           <main className="flex-1 flex flex-col bg-white mt-[70px] overflow-hidden">
-            {activeSideItem !== 'contacts' && (
+            {activeSideItem !== 'dashboard' && (
               <div className="shrink-0 bg-white/80 backdrop-blur-sm z-30">
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }}
@@ -86,13 +86,13 @@ export function App() {
             <div className="flex-1 overflow-hidden px-8">
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={activeSideItem === 'contacts' ? 'clients' : activeTab}
+                  key={activeSideItem === 'dashboard' ? 'clients' : activeTab}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   className="h-full"
                 >
-                  {activeSideItem === 'contacts' ? (
+                  {activeSideItem === 'dashboard' ? (
                     <ClientsRoot />
                   ) : activeTab === 'vendor-report' ? (
                     <VendorReportRoot />

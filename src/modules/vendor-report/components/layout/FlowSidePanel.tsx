@@ -15,7 +15,7 @@ interface SidePanelProps {
 }
 
 const defaultItems = [
-  { id: 'dashboard', icon: 'DashboardIcon' as const, label: 'Dashboard', section: 'Home' },
+  { id: 'dashboard', icon: 'DashboardIcon' as const, label: 'Clients', section: 'Home' },
   { id: 'campaigns', icon: 'CampaignsIcon' as const, label: 'Campaigns', section: 'Home' },
   { id: 'reports', icon: 'ReportsIcon' as const, label: 'Reports', section: 'Home' },
   { id: 'directory', icon: 'DirectoryIcon' as const, label: 'Directory', section: 'Tools' },
