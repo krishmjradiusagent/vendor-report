@@ -48,11 +48,11 @@ export const SidePanel: React.FC = () => {
     >
       {/* Brand Header / Logo Block */}
       <div className="w-full flex flex-col items-center mb-[24px]">
-        <div className="w-[56px] h-[56px] flex items-center justify-center rounded-[8px] bg-white border border-[#EFEFEF] shadow-sm hover:shadow-md transition-all pointer-events-auto cursor-pointer p-1">
+        <div className="w-[56px] h-[56px] flex items-center justify-center rounded-[8px] bg-white border border-[#EFEFEF] transition-all pointer-events-auto cursor-pointer">
           <img 
             src={logoPng} 
             alt="Rise Group" 
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain scale-125"
           />
         </div>
       </div>
