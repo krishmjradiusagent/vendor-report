@@ -59,15 +59,15 @@ const columns = [
     cell: (info) => {
       const val = info.getValue()
       return (
-        <div className="flex items-center gap-2 whitespace-nowrap">
+        <div className="flex flex-col gap-1 min-w-[180px]">
           <div className={cn(
-            "flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium w-fit",
+            "flex items-center gap-1.5 px-2 py-1 rounded-full text-[11px] font-medium w-fit",
             val.type === 'Listing' ? "bg-purple-100 text-purple-700" : "bg-green-100 text-green-700"
           )}>
             <div className={cn("w-1.5 h-1.5 rounded-full", val.type === 'Listing' ? "bg-purple-500" : "bg-green-500")} />
             {val.type}: {val.title}
           </div>
-          <span className="text-[11px] text-[#9CA3AF]">+{val.count} others</span>
+          <span className="text-[11px] text-[#9CA3AF] opacity-80">+{val.count} others</span>
         </div>
       )
     },
@@ -75,11 +75,11 @@ const columns = [
   columnHelper.accessor('agent', {
     header: 'Agent',
     cell: (info) => (
-      <div className="flex items-center gap-2">
-        <img src={info.getValue().avatar} className="w-6 h-6 rounded-full" alt="" />
-        <div className="flex flex-col leading-tight">
-          <span className="text-[12px] font-medium text-[#111827]">{info.getValue().name}</span>
-          <span className="text-[10px] text-[#6B7280]">{info.getValue().email}</span>
+      <div className="flex items-center gap-3 min-w-[180px]">
+        <img src={info.getValue().avatar} className="w-7 h-7 rounded-full shadow-sm" alt="" />
+        <div className="flex flex-col gap-0.5">
+          <span className="text-[13px] font-semibold text-[#111827]">{info.getValue().name}</span>
+          <span className="text-[11px] text-[#6B7280] opacity-90">{info.getValue().email}</span>
         </div>
       </div>
     ),
@@ -136,8 +136,8 @@ export function ClientTable({ data }: { data: Client[] }) {
   })
 
   return (
-    <div className="flex-1 overflow-auto custom-scrollbar bg-white rounded-xl border border-[#E5E7EB]">
-      <table className="w-full border-collapse min-w-[1200px]">
+    <div className="flex-1 overflow-auto custom-scrollbar bg-white rounded-xl border border-[#E5E7EB] shadow-sm">
+      <table className="w-full border-collapse min-w-[1600px]">
         <thead className="sticky top-0 z-20 bg-white">
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id} className="border-b border-[#E5E7EB]">
