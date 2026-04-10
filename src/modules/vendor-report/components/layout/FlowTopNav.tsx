@@ -18,8 +18,8 @@ export const FlowTopNav: React.FC<TopNavProps> = ({ contextSlot, userSlot, logoS
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-3">
           {logoSlot || (
-            <div className="flex items-center justify-center h-5">
-              <img src={logoTopNav} alt="Radius" className="h-full object-contain" />
+            <div className="flex items-center justify-center h-5 opacity-0 animate-in fade-in duration-700 fill-mode-forwards">
+              <img src={logoTopNav} alt="Radius" className="h-full w-auto object-contain" />
             </div>
           )}
         </div>
