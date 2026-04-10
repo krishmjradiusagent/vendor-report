@@ -21,10 +21,10 @@ export function App() {
   return (
     <div className="flex min-h-screen bg-white font-sans overflow-x-hidden">
       <SidePanel />
-      
+
       <div className="flex-1 flex flex-col ml-[72px] h-screen overflow-hidden">
         <TopNav />
-        
+
         {/* ── Main content area ── */}
         <main className="flex-1 flex flex-col bg-white mt-[70px] overflow-hidden">
           {/* Fixed Header Section (Greeting + Tabs) */}
@@ -38,8 +38,9 @@ export function App() {
             <div className="px-8">
               <nav className="flex items-center border-b border-[#E5E7EB] gap-0">
                 {TABS.map((tab) => (
-                  <button
+                  <motion.button
                     key={tab.id}
+                    whileTap={{ scale: 0.96 }}
                     onClick={() => setActiveTab(tab.id)}
                     className={cn(
                       'flex items-center gap-1.5 px-6 h-[48px] text-[13px] font-medium transition-all relative whitespace-nowrap',
@@ -66,7 +67,7 @@ export function App() {
                         transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                       />
                     )}
-                  </button>
+                  </motion.button>
                 ))}
               </nav>
             </div>
@@ -75,13 +76,13 @@ export function App() {
           {/* Scrollable Content Container */}
           <div className="flex-1 overflow-hidden px-8">
             <AnimatePresence mode="wait">
-              <motion.div 
+              <motion.div
                 key={activeTab}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-                className="h-full pt-4"
+                className="h-full pt-0"
               >
                 {activeTab === 'stats' && <StatsView />}
                 {activeTab === 'my-team' && (

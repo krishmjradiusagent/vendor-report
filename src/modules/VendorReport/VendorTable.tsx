@@ -48,8 +48,8 @@ const columns: ColumnDef<VendorTransaction>[] = [
   },
   {
     accessorKey: 'transactionType',
-    header: 'Transaction Type',
-    size: 150,
+    header: () => <span className="whitespace-nowrap">Transaction Type</span>,
+    size: 180,
     cell: ({ getValue }) => {
       const val = getValue() as string
       // Colorful: Different color indicators for types
@@ -147,8 +147,8 @@ const columns: ColumnDef<VendorTransaction>[] = [
   },
   {
     accessorKey: 'lender',
-    header: 'Lender',
-    size: 160,
+    header: () => <span className="whitespace-nowrap">Lender</span>,
+    size: 180,
     cell: ({ getValue }) => (
       <span className="text-[12px] font-medium text-[#374151] block truncate max-w-[150px]">
         {getValue() as string}
@@ -157,8 +157,8 @@ const columns: ColumnDef<VendorTransaction>[] = [
   },
   {
     accessorKey: 'escrowCompany',
-    header: 'Escrow Company',
-    size: 190,
+    header: () => <span className="whitespace-nowrap">Escrow Company</span>,
+    size: 200,
     cell: ({ getValue }) => (
       <span className="text-[12px] font-medium text-[#374151] block truncate max-w-[180px]">
         {getValue() as string}
@@ -167,8 +167,8 @@ const columns: ColumnDef<VendorTransaction>[] = [
   },
   {
     accessorKey: 'homeWarranty',
-    header: 'Home Warranty',
-    size: 150,
+    header: () => <span className="whitespace-nowrap">Home Warranty</span>,
+    size: 180,
     cell: ({ getValue }) => (
       <span className="text-[12px] font-medium text-[#374151] block truncate max-w-[140px]">
         {getValue() as string}
@@ -188,8 +188,8 @@ const columns: ColumnDef<VendorTransaction>[] = [
   },
   {
     accessorKey: 'titleCompany',
-    header: 'Title Company',
-    size: 160,
+    header: () => <span className="whitespace-nowrap">Title Company</span>,
+    size: 180,
     cell: ({ getValue }) => (
       <span className="text-[12px] font-medium text-[#374151] block truncate max-w-[150px]">
         {getValue() as string}
@@ -226,17 +226,14 @@ export function VendorTable({ data, globalFilter }: VendorTableProps) {
 
   return (
     <div className="flex flex-col gap-0 h-full overflow-hidden">
-      <div className="w-full flex-1 overflow-auto rounded-[16px] border border-[#E5E7EB] bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm custom-scrollbar">
-        <table className="w-full border-collapse">
-          <thead className="sticky top-0 z-20 bg-[#F9FAFB]/95 backdrop-blur-md">
+      <div className="w-full flex-1 overflow-auto rounded-[20px] border border-[#E5E7EB] bg-white shadow-[0_32px_64px_-12px_rgba(0,0,0,0.06)] backdrop-blur-sm custom-scrollbar scroll-smooth">
+        <table className="w-full border-separate border-spacing-0">
+          <thead className="sticky top-0 z-30 bg-[#F9FAFB] backdrop-blur-xl">
             {table.getHeaderGroups().map((hg) => (
-              <tr key={hg.id} className="border-b border-[#E5E7EB]">
+              <tr key={hg.id}>
                 {hg.headers.map((header) => {
                   const canSort = header.column.getCanSort()
                   const sorted = header.column.getIsSorted()
-                  const isSelect = header.id === 'select'
-                  // Determine alignment: typically right for numbers/dates, left for text
-                  const isNumeric = false // Placeholder for future logic if numeric data is added
                   
                   return (
                     <th
@@ -244,16 +241,14 @@ export function VendorTable({ data, globalFilter }: VendorTableProps) {
                       style={{ width: header.getSize(), minWidth: header.getSize() }}
                       onClick={canSort ? header.column.getToggleSortingHandler() : undefined}
                       className={cn(
-                        'px-4 py-3 transition-colors',
-                        isNumeric ? 'text-right' : 'text-left',
-                        canSort && 'cursor-pointer select-none hover:bg-indigo-50/50'
+                        'px-5 py-4 transition-all border-b border-[#E5E7EB] text-left align-middle',
+                        canSort && 'cursor-pointer select-none hover:bg-indigo-50/40 group'
                       )}
                     >
-                      <div className={cn(
-                        'flex items-center gap-1 text-[11px] font-bold text-[#6B7280] uppercase tracking-wider',
-                        isNumeric ? 'justify-end' : 'justify-start'
-                      )}>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
+                      <div className="flex items-center gap-2 text-[11px] font-bold text-[#6B7280] uppercase tracking-[0.1em] whitespace-nowrap">
+                        <span className="group-hover:text-indigo-600 transition-colors">
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                        </span>
                         {canSort && <SortIcon sorted={sorted} />}
                       </div>
                     </th>
@@ -263,98 +258,121 @@ export function VendorTable({ data, globalFilter }: VendorTableProps) {
             ))}
           </thead>
 
-          <tbody className="divide-y divide-[#F3F4F6]">
-            <AnimatePresence mode="popLayout">
+          <tbody className="relative">
+            <AnimatePresence mode="wait" initial={false}>
               {table.getRowModel().rows.length === 0 ? (
-                <tr>
-                  <td colSpan={columns.length} className="py-16 text-center text-[13px] text-[#9CA3AF]">
-                    No transactions found.
+                <motion.tr
+                  key="empty"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <td colSpan={columns.length} className="py-24 text-center">
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center">
+                        <ArrowUp className="w-6 h-6 text-gray-300" />
+                      </div>
+                      <p className="text-[13px] font-medium text-[#9CA3AF]">No transactions matched your filters.</p>
+                    </div>
                   </td>
-                </tr>
+                </motion.tr>
               ) : (
                 table.getRowModel().rows.map((row, i) => (
                   <motion.tr
                     key={row.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.3, delay: i * 0.02, ease: BEZIER }}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ 
+                      duration: 0.4, 
+                      delay: Math.min(i * 0.01, 0.2), 
+                      ease: BEZIER 
+                    }}
                     className={cn(
-                      'transition-colors h-[56px]',
-                      i % 2 === 0 ? 'bg-white' : 'bg-[#FAFBFF]', // Colorful: Zebra stripes
-                      row.getIsSelected() ? 'bg-indigo-50/60' : 'hover:bg-indigo-50/30'
+                      'group transition-all duration-200 h-[64px] border-b border-[#F3F4F6] relative',
+                      row.getIsSelected() ? 'bg-indigo-50/40' : 'bg-white hover:bg-[#FAFBFF]'
                     )}
                   >
-                    {row.getVisibleCells().map((cell) => {
-                      const isNumeric = false // Placeholder
-                      return (
-                        <td
-                          key={cell.id}
-                          className={cn('px-4 py-2', isNumeric ? 'text-right' : 'text-left')}
-                          style={{ maxWidth: cell.column.getSize() }}
-                        >
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </td>
-                      )
-                    })}
+                    {row.getVisibleCells().map((cell) => (
+                      <td
+                        key={cell.id}
+                        className="px-5 py-3 align-middle"
+                        style={{ maxWidth: cell.column.getSize() }}
+                      >
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
+                    ))}
                   </motion.tr>
                 ))
               )}
             </AnimatePresence>
           </tbody>
 
-          <tfoot className="sticky bottom-0 z-10 bg-[#F9FAFB]/95 backdrop-blur-md">
-            <tr className="bg-[#F9FAFB]/50 border-t border-[#E5E7EB]">
-              <td colSpan={columns.length} className="px-5 py-3 text-[12px] font-semibold text-[#6B7280]">
-                Overall total: <span className="text-indigo-600">{totalFiltered}</span> results identified
+          <tfoot className="sticky bottom-0 z-20 bg-white/95 backdrop-blur-xl border-t border-[#E5E7EB]">
+            <tr>
+              <td colSpan={columns.length} className="px-6 py-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+                  <span className="text-[13px] font-bold text-[#111827]">
+                    {totalFiltered} <span className="text-[#9CA3AF] font-medium">Transactions identified in current view</span>
+                  </span>
+                </div>
               </td>
             </tr>
           </tfoot>
         </table>
       </div>
 
-      {/* Pagination — Heritage styling */}
+      {/* Pagination — Refined high-fidelity controls */}
       {pageCount > 1 && (
-        <div className="flex items-center justify-between pt-5 px-1">
-          <span className="text-[12px] font-medium text-[#6B7280]">
-            Showing <span className="text-[#111827]">{pageIndex * PAGE_SIZE + 1}</span> to{' '}
-            <span className="text-[#111827]">
-              {Math.min((pageIndex + 1) * PAGE_SIZE, totalFiltered)}
-            </span>{' '}
-            of <span className="text-[#111827]">{totalFiltered}</span> results
-          </span>
-          <div className="flex items-center gap-1">
+        <div className="flex items-center justify-between py-6 px-2">
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[12px] font-semibold text-[#111827]">
+              Page {pageIndex + 1} <span className="text-[#9CA3AF] font-medium text-[11px] ml-1">of {pageCount}</span>
+            </span>
+            <span className="text-[11px] font-medium text-[#9CA3AF]">
+              Showing {pageIndex * PAGE_SIZE + 1}–{Math.min((pageIndex + 1) * PAGE_SIZE, totalFiltered)}
+            </span>
+          </div>
+          
+          <div className="flex items-center gap-2">
             <motion.button
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              className="flex items-center gap-1.5 h-[34px] px-4 text-[12px] font-semibold text-[#374151] border border-[#E5E7EB] rounded-full bg-white disabled:opacity-30 hover:bg-[#F9FAFB] transition-all shadow-sm"
+              className="flex items-center justify-center h-[38px] w-[38px] border border-[#E5E7EB] rounded-xl bg-white disabled:opacity-30 hover:bg-gray-50 transition-all shadow-sm group"
             >
-              <ChevronLeft className="h-4 w-4" /> Previous
+              <ChevronLeft className="h-4 w-4 text-[#374151] group-hover:text-indigo-600" />
             </motion.button>
-            <div className="flex items-center mx-1">
+            
+            <div className="flex items-center gap-1.5 px-2">
               {Array.from({ length: Math.min(pageCount, 5) }).map((_, i) => (
-                <button
+                <motion.button
                   key={i}
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.9 }}
                   onClick={() => table.setPageIndex(i)}
-                    className={cn(
-                      'h-[34px] w-[34px] text-[12px] font-bold rounded-full transition-all',
-                      pageIndex === i
-                        ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200'
-                        : 'text-[#6B7280] hover:bg-[#F3F4F6]'
-                    )}
+                  className={cn(
+                    'h-[34px] min-w-[34px] px-2 text-[12px] font-bold rounded-lg transition-all',
+                    pageIndex === i
+                      ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200 ring-4 ring-indigo-50'
+                      : 'text-[#6B7280] hover:bg-indigo-50 hover:text-indigo-600'
+                  )}
                 >
                   {i + 1}
-                </button>
+                </motion.button>
               ))}
             </div>
+
             <motion.button
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              className="flex items-center gap-1.5 h-[34px] px-4 text-[12px] font-semibold text-[#374151] border border-[#E5E7EB] rounded-full bg-white disabled:opacity-30 hover:bg-[#F9FAFB] transition-all shadow-sm"
+              className="flex items-center justify-center h-[38px] w-[38px] border border-[#E5E7EB] rounded-xl bg-white disabled:opacity-30 hover:bg-gray-50 transition-all shadow-sm group"
             >
-              Next <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4 text-[#374151] group-hover:text-indigo-600" />
             </motion.button>
           </div>
         </div>

@@ -15,7 +15,7 @@ export function VendorReportView() {
   // Dynamic vendor options based on selected type
   const vendorOptions = React.useMemo(() => {
     if (collaboratorType === 'All Types') return ['All Vendors']
-    
+
     const type = collaboratorType.toLowerCase()
     const vendors = new Set<string>()
     MOCK_TRANSACTIONS.forEach(t => {
@@ -25,7 +25,7 @@ export function VendorReportView() {
       else if (type === 'lender') v = t.lender
       else if (type === 'tc') v = t.tcCompany
       else if (type === 'home warranty') v = t.homeWarranty
-      
+
       if (v) vendors.add(v)
     })
     return ['All Vendors', ...Array.from(vendors).sort()]
@@ -61,10 +61,10 @@ export function VendorReportView() {
 
       return true
     })
-  }, [month, year, collaboratorType, vendor])
+  }, [month, year, collaboratorType, vendor, representing])
 
   return (
-    <div className="w-full h-full flex flex-col gap-0 overflow-hidden">
+    <div className="w-full h-full flex flex-col gap-3 overflow-hidden">
       <div className="shrink-0">
         <CommandBar
           search={search}
@@ -83,7 +83,7 @@ export function VendorReportView() {
           totalCount={filtered.length}
         />
       </div>
-      <div className="flex-1 overflow-hidden pt-4">
+      <div className="flex-1 overflow-hidden">
         <VendorTable data={filtered} globalFilter={search} />
       </div>
     </div>
