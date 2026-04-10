@@ -38,7 +38,7 @@ const menuItems = [
 ];
 
 export const SidePanel: React.FC = () => {
-  const [activeItem, setActiveItem] = React.useState('campaigns');
+  const [activeItem, setActiveItem] = React.useState('reports');
 
   return (
     <motion.aside
